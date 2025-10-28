@@ -37,6 +37,17 @@ export default function Home() {
         </div>
       </div>
       </section>
+
+      <footer className={styles.footer}>
+        <div className={styles.footer__link_wrapper}>
+                <div className={styles.footer__link_items}>
+                    <h2>Sobre nós</h2>
+                    <a href="/">Funcionamento</a>
+                    <a href="/">Download</a>
+                    <a href="/">Termos de serviços</a>
+                </div>
+            </div>
+      </footer>
     </div>
   );
 }
