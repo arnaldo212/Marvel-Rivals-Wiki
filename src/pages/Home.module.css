@@ -1,0 +1,59 @@
+.home {
+  color: #fff;
+  background-color: #141414;
+}
+
+.hero {
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #ff8177;
+}
+
+.hero p{
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.btn {
+  background: #f00946;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #ff265e;
+}
+
+.services {
+  margin-top: 80px;
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: #1f1f1f;
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('/blade.jpeg');
+  background-size: cover;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
