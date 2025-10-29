@@ -3,12 +3,11 @@
     grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-self: center;
-    margin: 0 auto;
+    margin: 0;
     height: 99vh;
     background-color: #141414;
     z-index: 1;
     width: 100%;
-    max-width: 1300px;
     padding: 0 50px;
 }
 
@@ -33,4 +32,16 @@
 .page_content li{
     color: #fff;
     font-size: 2rem;
+}
+
+.details_box {
+  background-color: #1c1c1c;
+  padding: 2rem;
+  border-radius: 10px;
+  color: white;
+  text-align: left;
+  margin-top: 2rem;
+}
+.details_box h2 {
+  color: #ff8177;
 }
