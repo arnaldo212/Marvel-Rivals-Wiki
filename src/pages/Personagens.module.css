@@ -29,3 +29,8 @@
     font-weight: 700;
     color: #fff;
 }
+
+.page_content li{
+    color: #fff;
+    font-size: 2rem;
+}
