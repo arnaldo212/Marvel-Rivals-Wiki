@@ -38,39 +38,212 @@ const getPersonagemImagem = (nome) => {
   return personagemImagens[nome]
 };
 
+//loading
+const Loading = () => {
+  const [dots, setDots] = React.useState('');
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setDots(prev => prev.length >= 3 ? '' : prev + '.');
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className={styles.loading_container}>
+      <div className={styles.spinner}></div>
+        <p>Carregando personagens{dots}</p>
+          <small style={{ color: '#aaa', marginTop: '10px'}}>
+            A API pode demorar alguns segundos...
+          </small>
+    </div>
+  );
+};
+
+// Componente de Card
+const PersonagemCard = ({ personagem, onClick }) => (
+  <div 
+    className={styles.card}
+    onClick={onClick}
+    style={{
+      backgroundImage: `url(${getPersonagemImagem(personagem.nome)})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}
+  >
+    <div className={styles.card_overlay}>
+      <div className={styles.card_content}>
+        <h3>{personagem.nome}</h3>
+        <p>{personagem.papel || 'Herói'}</p>
+        {personagem.dificuldade && (
+          <span className={styles.difficulty_badge}>
+            {personagem.dificuldade}
+          </span>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+// Componente de Modal
+const PersonagemModal = ({ personagem, onClose }) => {
+  if (!personagem) return null;
+
+  return (
+    <div className={styles.modal_overlay} onClick={onClose}>
+      <div className={styles.modal_content} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.close_button} onClick={onClose}>
+          ×
+        </button>
+        
+        <div className={styles.modal_header}>
+          <h2>{personagem.nome}</h2>
+        </div>
+
+        <div className={styles.modal_body}>
+          {personagem.descricao && (
+            <div className={styles.info_section}>
+              <h3>📖 Descrição</h3>
+              <p>{personagem.descricao}</p>
+            </div>
+          )}
+
+          <div className={styles.info_grid}>
+            {personagem.dificuldade && (
+              <div className={styles.info_box}>
+                <h4>⚡ Dificuldade</h4>
+                <p>{personagem.dificuldade}</p>
+              </div>
+            )}
+
+            {personagem.afilicao_principal && (
+              <div className={styles.info_box}>
+                <h4>🛡️ Afiliação</h4>
+                <p>{personagem.afilicao_principal}</p>
+              </div>
+            )}
+
+            {personagem.papel && (
+              <div className={styles.info_box}>
+                <h4>🎯 Papel</h4>
+                <p>{personagem.papel}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Componente de Busca
+const SearchBar = ({ query, onChange, resultCount }) => (
+  <div className={styles.search_section}>
+    <label htmlFor="search" className="form-label text-white">
+      Pesquisar Personagem
+    </label>
+    <input 
+      id="search"
+      type="text" 
+      value={query} 
+      onChange={onChange}
+      placeholder="Digite o nome do personagem..." 
+      className="form-control mb-3"
+      aria-label="Campo de busca de personagens"
+    />
+    {query && (
+      <p className={styles.result_count}>
+        {resultCount} {resultCount === 1 ? 'resultado encontrado' : 'resultados encontrados'}
+      </p>
+    )}
+  </div>
+);
+
+
+
+
 export default function Personagens() {
   const [personagens, setPersonagens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [selectedPersonagem, setSelectedPersonagem] = useState(null);
+  const [error, setError] = useState(null);
 
+useEffect(() => {
+  const fetchPersonagens = async () => {
+    try {
+      //timeout de 15 seg
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
+      const response = await fetch(
+        "https://api-marvel-rivals.onrender.com/personagens",
+        { signal: controller.signal }
+      );
 
-  useEffect(() => {
-    //chamada da api
-    fetch("https://api-marvel-rivals.onrender.com/personagens")
-    .then(response => response.json())//converte o retorno para json
-    .then(d => {
-      //console.log(d);
-      setPersonagens(d);
+      clearTimeout(timeoutId);
+
+      if(!response.ok){
+        throw new Error("Erro ao carregar");
+      }
+
+      const data = await response.json();
+      setPersonagens(data);
       setLoading(false);
-    })
-    .catch(error => {
-      console.error("Erro ao buscar dados:", error);
+    }catch(err){
+      if (err.name === 'AbortError'){
+        setError("API demorou muito");
+      }else{
+        setError(err.message);
+      }
       setLoading(false);
-    });
-  }, []);//[] roda so uma vez quando o componenete for montado
-  
-  if (loading){
-    //return<p>Carregando...</p>
-    return(
+    }
+  };
+  fetchPersonagens();
+}, []);
+
+const handleSearchChange = (e) => {
+    setQuery(e.target.value);
+    setSelectedPersonagem(null);
+  };
+
+  const handleCardClick = (personagem) => {
+    setSelectedPersonagem(personagem);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPersonagem(null);
+  };
+  if (loading) return <Loading />
+
+  if (error) {
+    return (
       <div className={styles.loading_container}>
-        <div className={styles.spinner}></div>
-        <p>Carregando personagens...</p>
+        <div style={{ textAlign: 'center', color: 'white' }}>
+          <h2 style={{ color: '#e23636', marginBottom: '20px' }}>😕 Ops!</h2>
+          <p style={{ marginBottom: '20px' }}>Erro ao carregar personagens: {error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            style={{
+              background: '#e23636',
+              color: 'white',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              cursor: 'pointer',
+              transition: 'all 0.3s'
+            }}
+            onMouseOver={(e) => e.target.style.background = '#ff4444'}
+            onMouseOut={(e) => e.target.style.background = '#e23636'}
+          >
+            🔄 Tentar novamente
+          </button>
+        </div>
       </div>
     );
   }
-    const filteredItems = getFilteredItems(query, personagens);
+
+  const filteredItems = getFilteredItems(query, personagens);
 
   return (
 
@@ -84,135 +257,40 @@ export default function Personagens() {
         </div>
 
         {/*barra de pesquisa */}
-        <div className={styles.search_section}>
-          <label htmlFor="search" className="form-label text-white">
-            Pesquisar Personagem
-          </label>
-          <input 
-            type="text" 
-            value={query} 
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSelectedPersonagem(null)//limpa seleção ao digitar
-            }}
-            placeholder="Digite o nome do personagem..." 
-            className="form-control mb-3"
-          />
-          {query && (
-            <p className={styles.result_count}>
-              {filteredItems.length} {filteredItems.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}
-            </p>
-          )}
-        </div>
-
-        {/*lista de resultados da busca */}
-        {query && filteredItems.length > 0 && (
-          <div className={styles.search_results}>
-            <h3>Resultados da busca:</h3>
-            {/*<ul className="list-group">
-              {filteredItems.map(value => (
-                <li key={value.id}
-                    className="list-group-item bg-dark text-white mb-1"
-                    onClick={() => setSelectedPersonagem(value)}
-                    style={{cursor: "pointer"}}
-                  >
-                    <strong>{value.nome}</strong>
-                </li>
-              ))}
-            </ul>*/}
-          </div>
-        )}
+        <SearchBar
+          query={query}
+          onChange={handleSearchChange}
+          resultCount={filteredItems.length}
+        />
 
         {/*detalhes do personagem */}
-        {selectedPersonagem && (
-          <div className={styles.modal_overlay} onClick={() => setSelectedPersonagem(null)}>
-            <div className={styles.modal_content} onClick={(e) => e.stopPropagation()}>
-              <button 
-                className={styles.close_button}
-                onClick={() => setSelectedPersonagem(null)}
-              >
-                ×
-              </button>
-              
-              <div className={styles.modal_header}>
-                <h2>{selectedPersonagem.nome}</h2>
-              </div>
-
-              <div className={styles.modal_body}>
-                {selectedPersonagem.descricao && (
-                  <div className={styles.info_section}>
-                    <h3>📖 Descrição</h3>
-                    <p>{selectedPersonagem.descricao}</p>
-                  </div>
-                )}
-
-                <div className={styles.info_grid}>
-                  {selectedPersonagem.dificuldade && (
-                    <div className={styles.info_box}>
-                      <h4>⚡ Dificuldade</h4>
-                      <p>{selectedPersonagem.dificuldade}</p>
-                    </div>
-                  )}
-
-                  {selectedPersonagem.afilicao_principal && (
-                    <div className={styles.info_box}>
-                      <h4>🛡️ Afiliação</h4>
-                      <p>{selectedPersonagem.afilicao_principal}</p>
-                    </div>
-                  )}
-
-                  {selectedPersonagem.papel && (
-                    <div className={styles.info_box}>
-                      <h4>🎯 Papel</h4>
-                      <p>{selectedPersonagem.papel}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      
+       <PersonagemModal
+        personagem={selectedPersonagem}
+        onClose={handleCloseModal}
+      />
         
       
     {/*cards dos personagens */}
-        <div className={styles.cards_section}>
-          <h2>Todos os Personagens</h2>
-          <div className={styles.cards_container}>
-            {filteredItems.map((personagem) => (
-              <div 
-                key={personagem.id} 
-                className={styles.card}
-                onClick={() => setSelectedPersonagem(personagem)}
-                style={{
-                  backgroundImage: `url(${getPersonagemImagem(personagem.nome)})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              >
-                <div className={styles.card_overlay}>
-                  <div className={styles.card_content}>
-                    <h3>{personagem.nome}</h3>
-                    <p>{personagem.papel || 'Herói'}</p>
-                    {personagem.dificuldade && (
-                      <span className={styles.difficulty_badge}>
-                        {personagem.dificuldade}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <section className={styles.cards_section}>
+          <h2>Todos os personagens</h2>
 
-          {filteredItems.length === 0 && (
+          {filteredItems.length > 0 ? (
+            <div className={styles.cards_container}>
+              {filteredItems.map((personagem) => (
+                <PersonagemCard
+                  key={personagem.id}
+                  personagem={personagem}
+                  onClick={() => handleCardClick(personagem)}
+                  />
+              ))}
+            </div>
+          ) : (
             <div className={styles.no_results}>
-              <p>Nenhum personagem encontrado com "{query}"</p>
+              <p>Nenhum personagem encontrado</p>
             </div>
           )}
-        </div>
+        </section>
       </div>
     </div>
-    
   );
 }

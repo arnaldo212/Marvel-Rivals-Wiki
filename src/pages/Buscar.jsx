@@ -5,8 +5,10 @@ export default function Buscar() {
   return (
     <div className={styles.page_container}>
       <div className={styles.page_content}>
-        <h1>Buscar</h1>
-        <p>Pesquise heróis, estatísticas e jogadores.</p>
+        <header className={styles.header}>
+          <h1>Buscar</h1>
+          <p>Pesquise heróis, estatísticas e jogadores.</p>
+        </header>
       </div>
     </div>
   );
