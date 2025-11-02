@@ -2,11 +2,6 @@ import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import styles from "./Jogador.module.css";
 
-/*do jeito que esta so falta arrumar como as partidas e o kda estão
-sendo mostrados, ta mostrando sempre o mesmo */
-
-
-
 //funcao pra determinar a cor do rank
 const getRankCor = (rank) => {
   const rankNormalizado = rank.trim().toLowerCase();
@@ -97,7 +92,7 @@ export default function Jogador() {
   const [jogador, setJogador] = useState(null);
   const [jogadores, setJogadores] = useState([]);
   const [loadingJogadores, setLoadingJogadores] = useState(true);
-   const [loadingStats, setLoadingStats] = useState(false);
+  const [loadingStats, setLoadingStats] = useState(false);
   const [error, setError] = useState(null);
   const [estatisticas, setEstatisticas] = useState(null);
 
@@ -132,23 +127,51 @@ const handleSelectJogador = async (selectedJogador) => {
   setEstatisticas(null); // reseta ao trocar de jogador
 
   try{
-    const response = await fetch(`https://api-marvel-rivals.onrender.com/rank/statistics?nome=${encodeURIComponent(selectedJogador.nome)}`);
+   // console.log("Buscando estatísticas para:", selectedJogador.nome);
+    const response = await fetch(`https://api-marvel-rivals.onrender.com/rank/statistics?nome_jogador=${encodeURIComponent(selectedJogador.nome.trim())}`);
 
     if(!response.ok){
       throw new Error("Erro ao buscar estatísticas de jogador");
     }
 
     let stats = await response.json();
-    console.log(" Estatísticas recebidas:", stats);
 
-    // se vier como array [ { ... } ], pega o primeiro item
-      if (Array.isArray(stats)) stats = stats[0];
-    setEstatisticas(stats);
+   if (!stats) {
+      throw new Error("Nenhuma estatística encontrada para este jogador");
+    }
+
+    //a api precisa encontrar o jogador correto
+    let jogadorStats = null;
+    
+    if (Array.isArray(stats) && stats.length > 0) {
+      //procura o jogador pelo nome
+      jogadorStats = stats.find(s => 
+        s.nome_jogador?.toLowerCase().trim() === selectedJogador.nome.toLowerCase().trim()
+      );
+      
+      //se n encontrar pelo nome exato, pega o primeiro (precisa testar isso dps)
+      if (!jogadorStats) {
+        //console.log("Jogador não encontrado pelo nome, usando primeiro item");
+        jogadorStats = stats[0];
+      }
+      
+      //debug
+      /*console.log("Jogador encontrado:", jogadorStats);
+      console.log("Partidas:", jogadorStats?.partidas_jogadas);
+      console.log("KDA:", jogadorStats?.kda);*/
+    }
+
+    if (jogadorStats) {
+      setEstatisticas(jogadorStats);
+    } else {
+      throw new Error("Nenhuma estatística encontrada");
+    }
   } catch (err) {
     console.error(err);
     setError(err.message);
+    //setEstatisticas(null);
   } finally {
-    setLoading(false);
+    setLoadingStats(false);
   }
 };
 
