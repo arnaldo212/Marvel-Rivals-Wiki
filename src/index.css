@@ -25,7 +25,6 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  background-color: yellow;
   border-color: #646cff;
 }
 button:focus,
