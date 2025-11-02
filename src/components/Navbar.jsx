@@ -171,10 +171,10 @@ export default function Navbar() {
                         className={styles.result_item}
                         onClick={() => handleResultClick('personagem', personagem)}
                       >
-                        <span className={styles.result_icon}>🦸</span>
+                        <span className={styles.result_icon}></span>
                         <div className={styles.result_info}>
                           <strong>{personagem.nome}</strong>
-                          <small>{personagem.papel || 'Herói'}</small>
+                          <small>{personagem.afilicao_principal}</small>
                         </div>
                       </div>
                     ))}
@@ -191,10 +191,10 @@ export default function Navbar() {
                         className={styles.result_item}
                         onClick={() => handleResultClick('jogador', jogador)}
                       >
-                        <span className={styles.result_icon}>👤</span>
+                        <span className={styles.result_icon}></span>
                         <div className={styles.result_info}>
                           <strong>{jogador.nome}</strong>
-                          <small>{jogador.rank || 'Jogador'}</small>
+                          <small>{jogador.ranque}</small>
                         </div>
                       </div>
                     ))}
