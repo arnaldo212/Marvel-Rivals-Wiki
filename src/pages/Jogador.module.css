@@ -167,6 +167,7 @@
     padding: 15px 20px;
     cursor: pointer;
     transition: all 0.2s;
+    color: white;
 }
 
 .sugestao_item:hover{

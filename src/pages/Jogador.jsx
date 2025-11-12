@@ -30,13 +30,13 @@ const Loading = () => {
     return () => clearInterval(interval);
   }, []);
 
-    return (
-      <div className={styles.loading_container}>
-        <div className={styles.spinner}></div>
-          <p>Carregando perfil{dots}</p>
-      </div>
-    );
-  };
+  return (
+    <div className={styles.loading_container}>
+      <div className={styles.spinner}></div>
+        <p>Carregando perfil{dots}</p>
+    </div>
+  );
+};
 
   //componente de busca do jogador
   const BuscaJogador = ({onSearch, jogadores}) => {
@@ -44,7 +44,7 @@ const Loading = () => {
     const [sugestoes, setSugestoes] = useState([]);
 
     useEffect(() => {
-      if(query.length < 2){
+      if(query.length < 1){
         setSugestoes([]);
         return;
       }
@@ -77,7 +77,7 @@ const Loading = () => {
               <span className={styles.sugestao_icone}></span>
               <div>
                 <strong>{jogador.nome}</strong>
-                <small>Nível {jogador.nivel} ° {jogador.ranque.trim()}</small>
+                {/*<small>Nível {jogador.nivel} ° {jogador.ranque.trim()}</small> será que é melhor mostrar só o nome na sugestão?*/}
               </div>
             </div>
             ))}
@@ -109,7 +109,18 @@ export default function Jogador() {
 
         //se veio da busca, seleciona o jogador
         if(location.state?.selectedJogador){
-          setJogador(location.state.selectedJogador);
+          //setJogador(location.state.selectedJogador);
+          const jogadorFromState = location.state.selectedJogador;
+          setJogador(jogadorFromState);
+
+          //se ja tem estatisticas (veio do ranking), usa direto
+          if (jogadorFromState.kda !== undefined || jogadorFromState.partidas_jogadas !== undefined) {
+            setEstatisticas(jogadorFromState);
+            setLoadingStats(false);
+          } else {
+            // Senão, busca as estatísticas
+            handleSelectJogador(jogadorFromState);
+          }
         }
       }catch(err){
         setError(err.message);
