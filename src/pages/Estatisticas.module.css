@@ -55,3 +55,74 @@
     font-weight: 400;
 }
 
+.dropdown_container {
+  margin-top: 40px;
+  color:#f6f6f6
+}
+
+.dropdown {
+  margin-left: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+.dropdown:hover {
+  border-color: #f30000;
+}
+
+.resultado {
+  margin-top: 30px;
+  background-color: #a12323;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Checkboxes */
+.checkbox_container {
+  display: flex;
+  gap: 20px;
+  color:#f6f6f6;
+  align-items: center;
+}
+
+.checkbox_label {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkbox_label input {
+  margin-right: 6px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.filtros {
+  display: flex;
+  justify-content: left; /* centraliza horizontalmente */
+  align-items: center;      /* alinha verticalmente */
+  gap: 40px;                /* espaçamento entre eles */
+  flex-wrap: wrap;          /* quebra linha em telas pequenas */
+  margin-top: 40px;
+}
+
+.tabela {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.tabela th, .tabela td {
+  border: 1px solid #444;
+  padding: 10px;
+  text-align: center;
+}
+
+.tabela th {
+  background-color: #222;
+  color: #ffb199;
+}
