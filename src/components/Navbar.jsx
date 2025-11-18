@@ -80,7 +80,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.navbar__container}>
         <Link to="/" className={styles.navbar__links2}>
-          RIVALS
+          MARVEL RIVALS
         </Link>
 
         <div

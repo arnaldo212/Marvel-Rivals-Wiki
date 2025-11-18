@@ -1,11 +1,39 @@
+@font-face{
+  font-family: "marvel-font";
+  src: url("../assets/fonts/Outrun\ future.otf") format("opentype");
+}
+
 .home {
   color: #fff;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
 }
 
 .hero {
-  text-align: center;
-  padding: 5rem 2rem;
+  display: flex;
+  gap: 0px;  /* espaço entre as imagens */
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.images_banners {
+    width: 600px;
+    height: 400px;
+    background-color: #f00946;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17, 17, 17, 0) 100%), url('/public/img/mr-wallpaper.jpeg');
+    background-size:cover;
+    position: relative;
+    border-radius: 15px 0px 0px 15px;
+}
+
+.images_banners2 {
+    width: 600px;
+    height: 400px;
+    background-color: #f00946;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17, 17, 17, 0.06) 100%), url('/public/img/mr-wallpaper2.jpeg');
+    background-size: cover;
+    position: relative;
+    border-radius: 0px 15px 15px 0px;
 }
 
 .hero h1 {
@@ -16,6 +44,74 @@
 .hero p{
     font-size: 1.5rem;
     margin-top: 1rem;
+}
+
+.news{
+    padding: 5rem 2rem;
+}
+
+.news_content{
+  display: flex;
+  gap: 50px;  /* espaço entre as imagens */
+  align-items: center;
+  justify-content: center;
+}
+
+.news_text{
+  height: 200px;
+  width: 500px;
+  padding: 10px;
+  text-align:justify;
+}
+
+.news_img{
+  margin-top: 20px;
+  width: 500px;
+  height: 250px;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17, 17, 17, 0.06) 100%), url('/public/img/gambit-rogue.jpg');
+  background-size: cover;
+  position: relative;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.news h1{
+  text-align: center;
+  font-size: 30px;
+  font-family: "marvel-font";
+}
+
+.news p{
+    font-family: monospace;
+}
+
+.news p1{
+    font-family: monospace;
+}
+
+.news_text a{
+    font-family: monospace;
+    color: inherit;
+  }
+
+.about {
+  padding: 5rem 2rem;
+}
+
+.about h1{
+  text-align: center;
+  font-size: 30px;
+  font-family: "marvel-font";
+}
+
+.about_text{
+  height: auto;
+  width: inherit;
+  padding: 10px;
+  text-align:justify;
+}
+
+.about p{
+  font-family: monospace;
 }
 
 .btn {
@@ -32,70 +128,74 @@
   background: #ff265e;
 }
 
-.services {
-  margin-top: 80px;
-  text-align: center;
+.trailers{
   padding: 5rem 2rem;
 }
 
-.cards {
+.trailers_content{
+  height: 315px;
+  width: auto;
   display: flex;
+  gap: 50px;  /* espaço entre as imagens */
+  align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
-.card {
-  background: #1f1f1f;
-  padding: 2rem;
-  margin: 1rem;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('/blade.jpeg');
-  background-size: cover;
-  position: relative;
+.trailers h1{
+  text-align: center;
+  font-size: 30px;
+  font-family: "marvel-font";
+  margin-bottom: 30px;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+.footer {
+  background-color: #111;
+  color: #fff;
+  padding: 40px 20px;
+  margin-top: 40px;
+  border-top: 1px solid #fff;
 }
 
-footer{
-    
-    padding: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.footer__content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.footer__link_wrapper{
-    display: flex;
+.footer__section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #fff;
+  font-family: "marvel-font";
 }
 
-.footer__link_items{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 16px;
-    text-align: left;
-    width: 160px;
-    box-sizing: border-box;
+.footer__section p,
+.footer__section li,
+.footer__section a {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-family: monospace;
 }
 
-.footer__link_items h2{
-    margin-bottom: 16px
+.footer__section a {
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.2s;
 }
 
-.footer__link_items > h2{
-    color: #fff;
+.footer__section a:hover {
+  color: #e62429;
 }
 
-.footer__link_items a{
-    color: #fff;
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-}
-
-.footer__link_items a:hover{
-    color: #f00946;
-    transition: 0.3s ease-out;
+.footer__bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
 }

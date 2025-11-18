@@ -1,3 +1,13 @@
+@font-face{
+  font-family: "action-font";
+  src: url("../assets/fonts/action_comics/Action\ Comics.ttf") format("truetype");
+}
+
+@font-face{
+  font-family: "marvel-font";
+  src: url("../assets/fonts/Outrun\ future.otf") format("opentype");
+}
+
 /* src/components/Navbar.module.css */
 .navbar {
   background: #131313;
@@ -36,6 +46,9 @@
 
 .navbar__item {
   height: 80px;
+  font-size: 15px;
+  font-family: "marvel-font", sans-serif;
+  padding-top: 10px;
 }
 
 .navbar__links {
@@ -45,6 +58,7 @@
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
+  font-family: "marvel-font", sans-serif;
 }
 
 .navbar__links2 {
@@ -54,11 +68,18 @@
   align-items: center;
   text-decoration: none;
   height: 100%;
-  font-size: 2rem;
+  font-size: 20px;
+  padding-left: 20px;
   margin-left: -50px;
+  font-family: 'action-font', sans-serif;
 }
 
 .navbar__links:hover {
+  color: #f00946;
+  transition: all 0.3s ease;
+}
+
+.navbar__links2:hover {
   color: #f00946;
   transition: all 0.3s ease;
 }
