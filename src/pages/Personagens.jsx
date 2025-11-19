@@ -96,7 +96,7 @@ const PersonagemCard = ({ personagem, onClick }) => (
 );
 
 // Componente de Modal
-const PersonagemModal = ({ personagem, onClose }) => {
+const PersonagemModal = ({ personagem, habilidades, habilidadeColab, onClose }) => {
   if (!personagem) return null;
 
   return (
@@ -162,9 +162,47 @@ const PersonagemModal = ({ personagem, onClose }) => {
           
           <div className={styles.habilidade_box}>
             <h4>🛠️ Habilidades</h4>
-            <div className={styles.habilidades_content}></div>
+            <div className={styles.habilidades_content}>
+
+              {!habilidades || habilidades.length === 0 ? (
+                   <p>Carregando habilidade...</p>
+              ) : (
+                  habilidades.map((hab, index) => (
+                    <div key={index} className={styles.habilidade_item}>
+                        <h3>{hab.nome}</h3>
+                        <p>{hab.descricao}</p>
+
+                        {hab.tipo && <p>Tipo: {hab.tipo}</p>}
+
+                        {hab.dano && hab.dano.flat && (
+                            <p>Dano: {hab.dano.flat}</p>
+                        )}
+
+                    </div>
+                  ))
+                )}
+                
+            </div>
           </div>
 
+          <div className={styles.habilidade_box}>
+            <h4>🤜🤛 Habilidades Colaborativas</h4>
+
+            <div className={styles.habilidades_content}>
+              {!habilidadeColab || habilidadeColab.length === 0 ? (
+                <p>Este personagem não possui habilidades colaborativas.</p>
+              ) : (
+                <div className={styles.habilidade_item}>
+                    <h3>{habilidadeColab[0]?.nome}</h3>
+                    <p>{habilidadeColab[0]?.descricao}</p>
+                    <p>Tipo: {habilidadeColab[0]?.tipo}</p>
+                    <p>Efeito: {habilidadeColab[0]?.efeito_especial}</p>
+                    <p>Duração: {habilidadeColab[0]?.duracao} segundos</p>
+                    <p>Bônus: {habilidadeColab[0]?.bonus_habilidade}</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -195,14 +233,14 @@ const SearchBar = ({ query, onChange, resultCount }) => (
 );
 
 
-
-
 export default function Personagens() {
   const [personagens, setPersonagens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [selectedPersonagem, setSelectedPersonagem] = useState(null);
   const [error, setError] = useState(null);
+  const [habilidades, setHabilidades] = useState([]);
+  const [habilidadeColab, setHabilidadeColab] = useState([]);
 
 useEffect(() => {
   const fetchPersonagens = async () => {
@@ -244,6 +282,7 @@ const handleSearchChange = (e) => {
 
   const handleCardClick = (personagem) => {
     setSelectedPersonagem(personagem);
+    buscarHabilidades(personagem.nome); 
   };
 
   const handleCloseModal = () => {
@@ -279,6 +318,27 @@ const handleSearchChange = (e) => {
     );
   }
 
+  const buscarHabilidades = async (nomePersonagem) => {
+    try {
+      const response = await fetch(
+        `https://api-marvel-rivals.onrender.com/personagens/personagem/${nomePersonagem.toLowerCase()}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar habilidades");
+      }
+
+      const data = await response.json();
+
+      // Aqui pegue apenas as habilidades do retorno
+      setHabilidades(data.Habilidades || []);
+      setHabilidadeColab(data.Habilidades_Colaborativas || []);
+    } catch (err) {
+      console.error("Erro ao buscar habilidades:", err);
+      setHabilidades([]);
+    }
+  };
+
   const filteredItems = getFilteredItems(query, personagens);
 
   return (
@@ -302,6 +362,8 @@ const handleSearchChange = (e) => {
         {/*detalhes do personagem */}
        <PersonagemModal
         personagem={selectedPersonagem}
+        habilidades={habilidades}
+        habilidadeColab={habilidadeColab}
         onClose={handleCloseModal}
       />
         
@@ -329,4 +391,8 @@ const handleSearchChange = (e) => {
       </div>
     </div>
   );
+
+
 }
+
+

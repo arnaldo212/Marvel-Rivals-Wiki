@@ -102,7 +102,7 @@
   margin-bottom: 10px;
   text-shadow: 2px 2px 8px rgba(226, 54, 54, 0.5);
   background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+  background-image: linear-gradient(to top, red 0%, #ffb199 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -116,7 +116,10 @@
 
 /*busca */
 .search_section {
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 30px;
+  width: 900px;
 }
 
 .result_count {
@@ -151,7 +154,7 @@
   margin-bottom: 30px;
   text-align: center;
   background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+  background-image: linear-gradient(to top, red 0%, #ffb199 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -376,9 +379,9 @@
   width: auto;
   height: auto;
   background: rgba(226, 54, 54, 0.1);
+  padding: 15px;
   border: 1px solid rgba(226, 54, 54, 0.3);
   border-radius: 8px;
-  padding: 15px;
 }
 
 .habilidade_box h4{
@@ -388,5 +391,25 @@
 
 .habilidades_content{
   width: auto;
-  height: 300px;
+  height: auto;
+}
+
+.habilidade_item{
+  width: auto;
+  height: auto;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid rgba(226, 54, 54, 0.3);
+  border-radius: 8px;
+}
+
+.habilidade_item h3{
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-family: monospace;
+  color: white;
+}
+
+.habilidade_item p{
+  font-size: 1rem;
 }
