@@ -11,8 +11,6 @@ export default defineConfig({
     }),
   ],
   server: {
-    watch: {
-      usePolling: true, // força a escuta de alterações
-    },
+    open: false
   },
 })
