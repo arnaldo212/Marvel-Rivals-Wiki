@@ -283,7 +283,7 @@ if(error){
               </div>
               ) : (
                 <div className={styles.empty_state}>
-                  <span className={styles.empty_icon}>icone</span>
+                  <span className={styles.empty_icon}>👤</span>
                   <h3>Nenhum jogador selecionado</h3>
                   <p>Use a busca acima para encontrar um jogador</p>
                 </div>
