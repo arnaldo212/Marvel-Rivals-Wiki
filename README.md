@@ -1,18 +1,30 @@
-# React + Vite
+# 🌟 Marvel Rivals Wiki
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação desenvolvida como parte do curso de **Banco de Dados II**, integrando um front-end em React com uma **API exclusiva** construída e mantida pelo grupo.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 👥 Integrantes do Grupo
 
-## React Compiler
+- **Arnaldo Godoy**
+- **Gustavo Gomes**
+- **Gustavo Frias**
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+---
 
-Note: This will impact Vite dev & build performances.
+## 📘 Descrição
 
-## Expanding the ESLint configuration
+A aplicação integra-se com uma API desenvolvida especialmente para este projeto, permitindo consultar personagens, habilidades, características e estatísticas do universo **Marvel Rivals** diretamente do banco de dados modelado pela equipe.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🔗 Links Importantes
+
+### 🖥️ Aplicação  
+🔗 https://delicate-nasturtium-3bb4e8.netlify.app
+
+### ⚙️ API (FastAPI)  
+🔗 https://api-marvel-rivals.onrender.com/docs
+
+### 📦 Repositório da API  
+🔗 https://github.com/ogustavofriasx/marvel-rivals-api
+
+---
