@@ -235,7 +235,7 @@ if(error){
               <div className={styles.stats_grid}>
                 {/**nivel */}
                 <div className={styles.stat_card}>
-                  <div className={styles.stat_icon}>raio</div>
+                  <div className={styles.stat_icon}>⚡</div>
                   <div className={styles.stat_info}>
                     <span className={styles.stat_label}>Nível</span>
                     <span className={styles.stat_value}>{jogador.nivel}</span>
@@ -293,3 +293,4 @@ if(error){
 
   );
 }
+
