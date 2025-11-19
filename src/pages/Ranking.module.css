@@ -1,8 +1,14 @@
+@font-face{
+  font-family: "marvel-font";
+  src: url("../assets/fonts/Outrun\ future.otf") format("opentype");
+}
+
 .page_container{
     min-height: 100vh;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
     padding: 20px;
     width: 100%;
+    font-family: monospace;
 }
 
 .page_content{
@@ -31,7 +37,7 @@
 }
 
 .header h1{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
     text-shadow: 2px 2px 8px rgba(226, 54, 54, 0.5);
@@ -40,6 +46,7 @@
     background-size: 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-family: "marvel-font";
 }
 
 .header p{

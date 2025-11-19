@@ -38,6 +38,13 @@ const getPersonagemImagem = (nome) => {
   return personagemImagens[nome]
 };
 
+const classeMap = {
+  1: "Vanguarda",
+  2: "Duelista",
+  3: "Estrategista"
+};
+
+
 //loading
 const Loading = () => {
   const [dots, setDots] = React.useState('');
@@ -73,11 +80,10 @@ const PersonagemCard = ({ personagem, onClick }) => (
     <div className={styles.card_overlay}>
       <div className={styles.card_content}>
         <h3>{personagem.nome}</h3>
-        <p>{personagem.papel || 'Herói'}</p>
+        <p>{personagem.classe}</p>
         {personagem.dificuldade && (
-          <span className={styles.difficulty_badge}>
-            {personagem.dificuldade}
-          </span>
+          <p>{classeMap[personagem.id_classe] || "Classe indefinida"}</p>
+
         )}
       </div>
     </div>
@@ -100,7 +106,7 @@ const PersonagemModal = ({ personagem, onClose }) => {
         </div>
 
         <div className={styles.modal_body}>
-          {personagem.descricao && (
+               {personagem.descricao && (
             <div className={styles.info_section}>
               <h3>📖 Descrição</h3>
               <p>{personagem.descricao}</p>
@@ -122,12 +128,7 @@ const PersonagemModal = ({ personagem, onClose }) => {
               </div>
             )}
 
-            {personagem.papel && (
-              <div className={styles.info_box}>
-                <h4>🎯 Papel</h4>
-                <p>{personagem.papel}</p>
-              </div>
-            )}
+
           </div>
         </div>
       </div>

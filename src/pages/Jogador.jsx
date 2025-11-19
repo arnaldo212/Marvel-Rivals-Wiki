@@ -2,6 +2,14 @@ import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import styles from "./Jogador.module.css";
 
+const images = [
+  '../public/img/magneto.png',
+  '../public/img/rocket.png',
+  '../public/img/blade.jpeg',
+]
+
+const randomImage = images[Math.floor(Math.random() * images.length)];
+
 //funcao pra determinar a cor do rank
 const getRankCor = (rank) => {
   const rankNormalizado = rank.trim().toLowerCase();
@@ -202,7 +210,7 @@ if(error){
     <div className={styles.page_container}>
       <div className={styles.page_content}>
         <header className={styles.header}>
-          <h1>Perfil do Jogador</h1>
+          <h1>Perfil de Jogadores</h1>
           <p>Visualize informações detalhadas sobre um jogador específico.</p>
         </header>
 
@@ -215,7 +223,7 @@ if(error){
             {/*card principal */}
             <div className={styles.perfil_card}>
               <div className={styles.perfil_header}>
-                <div className={styles.avatar}>
+                <div className={styles.avatar}  style={{ backgroundImage: `url(${randomImage})` }}>
                   <span className={styles.avatar_icon}></span>
                 </div>
                 <div className={styles.perfil_info}>
@@ -282,5 +290,6 @@ if(error){
               )}
             </div>
           </div>
+
   );
 }

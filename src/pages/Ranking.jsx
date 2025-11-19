@@ -59,10 +59,10 @@ const Loading = () => {
 //componente de filtros
 const Filtros = ({filtroAtivo, onFiltroChange}) => {
   const filtros =[
-    {id: 'rank', label: 'Rank', icon: 'icone'},
-    {id: 'nivel', label: 'Nível', icon: '?'},
-    {id: 'kda', label: 'KDA', icon: '??'},
-    {id: 'partidas', label: 'Partidas', icon: '???'},
+    {id: 'rank', label: 'Rank', icon: '👤'},
+    {id: 'nivel', label: 'Nível', icon: '🔰'},
+    {id: 'kda', label: 'KDA', icon: '⚔️'},
+    {id: 'partidas', label: 'Partidas', icon: '📊'},
   ];
 
   return (
@@ -184,7 +184,7 @@ export default function Ranking() {
                 <span className={styles.posicao_numero}>2°</span>
               </div>
             <div className={styles.podio_content} onClick={() => handleJogadorClick(jogadoresOrdenados[1])}>
-              <div className={styles.podio_avatar}>icone</div>
+              <div className={styles.podio_avatar}>👤</div>
               <h3>{jogadoresOrdenados[1].nome}</h3>
               <p className={styles.podio_stat}>
                 {filtro === 'nivel' && `Nível ${jogadoresOrdenados[1].nivel}`}
@@ -204,7 +204,7 @@ export default function Ranking() {
               <span className={styles.posicao_numero}>1°</span>
             </div>
             <div className={styles.podio_content} onClick={() => handleJogadorClick(jogadoresOrdenados[0])}> 
-              <div className={styles.podio_avatar}>icone</div>
+              <div className={styles.podio_avatar}>👤</div>
               <h3>{jogadoresOrdenados[0].nome}</h3>
               <p className={styles.podio_stat}>
                 {filtro === 'nivel' && `Nível ${jogadoresOrdenados[0].nivel}`}
