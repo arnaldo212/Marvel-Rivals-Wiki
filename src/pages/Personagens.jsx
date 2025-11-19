@@ -44,6 +44,11 @@ const classeMap = {
   3: "Estrategista"
 };
 
+const classeMapIcon = {
+  1: "🛡️",
+  2: "⚔️",
+  3: "🧠"
+}
 
 //loading
 const Loading = () => {
@@ -98,12 +103,21 @@ const PersonagemModal = ({ personagem, onClose }) => {
     <div className={styles.modal_overlay} onClick={onClose}>
       <div className={styles.modal_content} onClick={(e) => e.stopPropagation()}>
         <button className={styles.close_button} onClick={onClose}>
-          ×
+          X
         </button>
         
         <div className={styles.modal_header}>
           <h2>{personagem.nome}</h2>
         </div>
+
+        <div className={styles.info_section}>
+          <div className={styles.modal_image}>
+              <img 
+                src={getPersonagemImagem(personagem.nome)}
+                alt={personagem.nome}
+              />
+          </div>
+      </div>
 
         <div className={styles.modal_body}>
                {personagem.descricao && (
@@ -114,22 +128,43 @@ const PersonagemModal = ({ personagem, onClose }) => {
           )}
 
           <div className={styles.info_grid}>
-            {personagem.dificuldade && (
+
+            {personagem.afilicao_principal && (
               <div className={styles.info_box}>
-                <h4>⚡ Dificuldade</h4>
-                <p>{personagem.dificuldade}</p>
+                <h4>❤️ Pontos de vida</h4>
+                <p>{personagem.pontos_vida}</p>
               </div>
             )}
 
             {personagem.afilicao_principal && (
               <div className={styles.info_box}>
-                <h4>🛡️ Afiliação</h4>
+                <h4>{classeMapIcon[personagem.id_classe]} Classe</h4>
+                <p>{classeMap[personagem.id_classe] || "Classe indefinida"}</p>
+              </div>
+            )}
+
+            
+            {personagem.afilicao_principal && (
+              <div className={styles.info_box}>
+                <h4>👥 Afiliação</h4>
                 <p>{personagem.afilicao_principal}</p>
               </div>
             )}
 
+            {personagem.dificuldade && (
+              <div className={styles.info_box}>
+                <h4>🎯 Dificuldade</h4>
+                <p>{personagem.dificuldade}</p>
+              </div>
+            )}
 
           </div>
+          
+          <div className={styles.habilidade_box}>
+            <h4>🛠️ Habilidades</h4>
+            <div className={styles.habilidades_content}></div>
+          </div>
+
         </div>
       </div>
     </div>
