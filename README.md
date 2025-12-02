@@ -14,17 +14,30 @@ Aplicação desenvolvida como parte do curso de **Banco de Dados II**, integrand
 
 ## 📘 Descrição
 
-A aplicação integra-se com uma API desenvolvida especialmente para este projeto, permitindo consultar personagens, habilidades, características e estatísticas do universo **Marvel Rivals** diretamente do banco de dados modelado pela equipe.
+A aplicação integra-se com uma API desenvolvida especialmente para este projeto, permitindo consultar personagens, habilidades, características e estatísticas do universo **Marvel Rivals** diretamente do banco de dados modelado pela equipe. Foi feita em SQL e em MongoDB, ambas tem uma branch nesse repositório.
 
 ## 🔗 Links Importantes
 
 ### 🖥️ Aplicação  
-🔗 https://delicate-nasturtium-3bb4e8.netlify.app
+🔗 SQL: https://delicate-nasturtium-3bb4e8.netlify.app
+
+
+🔗 Mongo: -- 
+
+---
 
 ### ⚙️ API (FastAPI)  
-🔗 https://api-marvel-rivals.onrender.com/docs
+🔗 SQL: https://api-marvel-rivals.onrender.com/docs
+
+
+🔗 Mongo: https://marvel-rivals-api-mongo.onrender.com/docs
+
+---
 
 ### 📦 Repositório da API  
-🔗 https://github.com/ogustavofriasx/marvel-rivals-api
+🔗 SQL: https://github.com/ogustavofriasx/marvel-rivals-api
+
+
+🔗 Mongo: https://github.com/arnaldo212/marvel-rivals-api-mongo
 
 ---
