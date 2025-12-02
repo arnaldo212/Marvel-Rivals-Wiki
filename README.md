@@ -20,18 +20,24 @@ A aplicação integra-se com uma API desenvolvida especialmente para este projet
 
 ### 🖥️ Aplicação  
 🔗 SQL: https://delicate-nasturtium-3bb4e8.netlify.app
+
+
 🔗 Mongo: -- 
 
 ---
 
 ### ⚙️ API (FastAPI)  
 🔗 SQL: https://api-marvel-rivals.onrender.com/docs
+
+
 🔗 Mongo: https://marvel-rivals-api-mongo.onrender.com/docs
 
 ---
 
 ### 📦 Repositório da API  
 🔗 SQL: https://github.com/ogustavofriasx/marvel-rivals-api
+
+
 🔗 Mongo: https://github.com/arnaldo212/marvel-rivals-api-mongo
 
 ---
