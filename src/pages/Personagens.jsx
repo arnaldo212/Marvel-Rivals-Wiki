@@ -250,7 +250,7 @@ useEffect(() => {
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       const response = await fetch(
-        "https://api-marvel-rivals.onrender.com/personagens",
+        "https://marvel-rivals-api-mongo.onrender.com/personagens", //URL DA API MONGO
         { signal: controller.signal }
       );
 
@@ -321,7 +321,7 @@ const handleSearchChange = (e) => {
   const buscarHabilidades = async (nomePersonagem) => {
     try {
       const response = await fetch(
-        `https://api-marvel-rivals.onrender.com/personagens/personagem/${nomePersonagem.toLowerCase()}`
+        `https://marvel-rivals-api-mongo.onrender.com/personagens${nomePersonagem.toLowerCase()}`
       );
 
       if (!response.ok) {
@@ -331,7 +331,7 @@ const handleSearchChange = (e) => {
       const data = await response.json();
 
       // Aqui pegue apenas as habilidades do retorno
-      setHabilidades(data.Habilidades || []);
+      setHabilidades(data.habilidades || []);
       setHabilidadeColab(data.Habilidades_Colaborativas || []);
     } catch (err) {
       console.error("Erro ao buscar habilidades:", err);

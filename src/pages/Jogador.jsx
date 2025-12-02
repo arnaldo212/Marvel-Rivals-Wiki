@@ -110,7 +110,7 @@ export default function Jogador() {
   useEffect(() =>  {
     const fetchJogadores = async () => {
       try{
-        const response = await fetch("https://api-marvel-rivals.onrender.com/jogadores/");
+        const response = await fetch("https://marvel-rivals-api-mongo.onrender.com/jogadores/");
         if(!response.ok) throw new Error("Erro ao carregar jogadores");
         const data = await response.json();
         setJogadores(data);
@@ -147,8 +147,8 @@ const handleSelectJogador = async (selectedJogador) => {
 
   try{
    // console.log("Buscando estatísticas para:", selectedJogador.nome);
-    const response = await fetch(`https://api-marvel-rivals.onrender.com/rank/statistics?nome_jogador=${encodeURIComponent(selectedJogador.nome.trim())}`);
-
+    const response = await fetch(`https://marvel-rivals-api-mongo.onrender.com/partidas/rank_jogadores?nome_jogador=${encodeURIComponent(selectedJogador.nome.trim())}`);
+    // URL DO MONGO ACIMA
     if(!response.ok){
       throw new Error("Erro ao buscar estatísticas de jogador");
     }

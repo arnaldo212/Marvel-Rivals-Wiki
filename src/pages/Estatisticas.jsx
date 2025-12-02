@@ -15,10 +15,10 @@ export default function Estatisticas() {
     if (opcaoSelecionada === "Abates"){ // só faz a busca para "Abates"
       let url = null;
       if (mostrarJogador) {
-        url = "https://api-marvel-rivals.onrender.com/rank/statistics";
+        url = "https://marvel-rivals-api-mongo.onrender.com/partidas/rank_jogadores";
       } else if (mostrarPersonagem) {
         // FAZER BUSCA DE PERSONAGENS COM MAIS ABATES NO TOTAL NA API
-        url = "https://api-marvel-rivals.onrender.com/personagens/estatisticas"; 
+        url = "https://marvel-rivals-api-mongo.onrender.com/partidas/personagens"; 
       } else {
         setDados([]);
         return;
@@ -43,10 +43,10 @@ export default function Estatisticas() {
     } else if (opcaoSelecionada === "Partidas Jogadas") {
         let url = null;
         if (mostrarJogador) {
-          url = "https://api-marvel-rivals.onrender.com/rank/statistics";
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/rank_jogadores";
         } else if (mostrarPersonagem) {
           // FAZER BUSCA DE PERSONAGENS COM MAIS ABATES NO TOTAL NA API
-          url = "https://api-marvel-rivals.onrender.com/personagens/estatisticas"; 
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/personagens"; 
         } else {
           setDados([]);
           return;
@@ -71,10 +71,10 @@ export default function Estatisticas() {
     }  else if (opcaoSelecionada === "Geral") {
         let url = null;
         if (mostrarJogador) {
-          url = "https://api-marvel-rivals.onrender.com/jogadores/estatisticas";
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/jogadores";// API MONGO
         } else if (mostrarPersonagem) {
           // FAZER BUSCA DE PERSONAGENS COM MAIS ABATES NO TOTAL NA API
-          url = "https://api-marvel-rivals.onrender.com/personagens/estatisticas"; 
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/personagens"; // API MONGO
         } else {
           setDados([]);
           return;
@@ -99,10 +99,10 @@ export default function Estatisticas() {
     } else if (opcaoSelecionada === "Vitorias") {
         let url = null;
         if (mostrarJogador) {
-          url = "https://api-marvel-rivals.onrender.com/jogadores/estatisticas";
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/jogadores";
         } else if (mostrarPersonagem) {
           // FAZER BUSCA DE PERSONAGENS COM MAIS ABATES NO TOTAL NA API
-          url = "https://api-marvel-rivals.onrender.com/personagens/estatisticas"; 
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/personagens"; 
         } else {
           setDados([]);
           return;
@@ -127,10 +127,10 @@ export default function Estatisticas() {
     } else if (opcaoSelecionada === "Taxa de Vitoria") {
         let url = null;
         if (mostrarJogador) {
-          url = "https://api-marvel-rivals.onrender.com/jogadores/estatisticas";
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/jogadores";
         } else if (mostrarPersonagem) {
           // FAZER BUSCA DE PERSONAGENS COM MAIS ABATES NO TOTAL NA API
-          url = "https://api-marvel-rivals.onrender.com/personagens/estatisticas"; 
+          url = "https://marvel-rivals-api-mongo.onrender.com/partidas/personagens"; 
         } else {
           setDados([]);
           return;

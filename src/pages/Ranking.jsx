@@ -94,28 +94,33 @@ export default function Ranking() {
     const fetchData = async () => {
       try{
         //busca jogadores
-        const jogadoresRes = await fetch("https://api-marvel-rivals.onrender.com/jogadores/");
+        const jogadoresRes = await fetch("https://marvel-rivals-api-mongo.onrender.com/partidas/rank_jogadores"); // API MONGO
         if(!jogadoresRes.ok) throw new Error("erro ao carregar jogadores");
         const jogadoresData = await jogadoresRes.json();
 
         //busca estatisticas
-        const statsRes = await fetch("https://api-marvel-rivals.onrender.com/rank/statistics");
+        const statsRes = await fetch("https://marvel-rivals-api-mongo.onrender.com/partidas/rank_jogadores"); // API MONGO
         const statsData = await statsRes.json();
 
         //combina dados dos jogadores com estatisticas
         const jogadoresComStats = jogadoresData.map(jogador => {
-          const stats = statsData.find(s =>
-            s.nome_jogador?.toLowerCase().trim() === jogador.nome.toLowerCase().trim()
-          );
+            // 1. Obtenha os nomes normalizados (minúsculas e sem espaços)
+            const jogadorNomeNormalizado = jogador.nome_jogador.toLowerCase().trim();
 
-          return{
-            ...jogador,
-            partidas_jogadas: stats?.partidas_jogadas || 0,
-            kda: stats?.kda || 0,
-            total_abates: stats?.total_abates || 0,
-            total_mortes: stats?.total_mortes || 0,
-            total_assistencias: stats?.total_assistencias || 0,
-          };
+            // 2. Use a comparação normalizada no .find()
+            const stats = statsData.find(stat => 
+                stat.nome_jogador?.toLowerCase().trim() === jogadorNomeNormalizado
+            );
+
+            return{
+                ...jogador,
+                // O uso do `?.` (optional chaining) e `|| 0` está correto aqui!
+                partidas_jogadas: stats?.partidas_jogadas || 0,
+                kda: stats?.kda || 0,
+                total_abates: stats?.total_abates || 0,
+                total_mortes: stats?.total_mortes || 0,
+                total_assistencias: stats?.total_assistencias || 0,
+            };
         });
 
         setJogadores(jogadoresComStats);
@@ -185,7 +190,7 @@ export default function Ranking() {
               </div>
             <div className={styles.podio_content} onClick={() => handleJogadorClick(jogadoresOrdenados[1])}>
               <div className={styles.podio_avatar}>👤</div>
-              <h3>{jogadoresOrdenados[1].nome}</h3>
+              <h3>{jogadoresOrdenados[1].nome_jogador}</h3>
               <p className={styles.podio_stat}>
                 {filtro === 'nivel' && `Nível ${jogadoresOrdenados[1].nivel}`}
                 {filtro === 'kda' && `KDA ${jogadoresOrdenados[1].kda.toFixed(2)}`}
@@ -205,7 +210,7 @@ export default function Ranking() {
             </div>
             <div className={styles.podio_content} onClick={() => handleJogadorClick(jogadoresOrdenados[0])}> 
               <div className={styles.podio_avatar}>👤</div>
-              <h3>{jogadoresOrdenados[0].nome}</h3>
+              <h3>{jogadoresOrdenados[0].nome_jogador}</h3>
               <p className={styles.podio_stat}>
                 {filtro === 'nivel' && `Nível ${jogadoresOrdenados[0].nivel}`}
                 {filtro === 'kda' && `KDA ${jogadoresOrdenados[0].kda.toFixed(2)}`}
@@ -229,7 +234,7 @@ export default function Ranking() {
                 onClick={() => handleJogadorClick(jogadoresOrdenados[2])}
               >
                 <div className={styles.podio_avatar}>👤</div>
-                <h3>{jogadoresOrdenados[2].nome}</h3>
+                <h3>{jogadoresOrdenados[2].nome_jogador}</h3>
                 <p className={styles.podio_stat}>
                   {filtro === 'nivel' && `Nível ${jogadoresOrdenados[2].nivel}`}
                   {filtro === 'kda' && `KDA ${jogadoresOrdenados[2].kda.toFixed(2)}`}
@@ -284,7 +289,7 @@ export default function Ranking() {
                     <td className={styles.jogador_cell}>
                       <div className={styles.jogador_info}>
                         <span className={styles.avatar_small}>👤</span>
-                        <strong>{jogador.nome}</strong>
+                        <strong>{jogador.nome_jogador}</strong>
                       </div>
                     </td>
                     <td className={styles.nivel}>
