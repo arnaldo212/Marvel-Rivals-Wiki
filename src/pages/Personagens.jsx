@@ -12,8 +12,8 @@ const getFilteredItems = (query, personagens) => {
 
 // mapear as imagens dos personagens
 const personagemImagens = {
-  "Homem Aranha": "/personagens/homem-aranha.png",
-  "Capitão América": "/personagens/capitao.png",
+  "Homem-Aranha": "/personagens/homem-aranha.png",
+  "Capitao America": "/personagens/capitao.png",
   "Senhor Fantástico": "/personagens/fantastico.png",
   "Groot": "/personagens/groot.png",
   "Homem de Ferro": "/personagens/homem-de-ferro.png",
@@ -112,22 +112,22 @@ const PersonagemModal = ({ personagem, habilidades_normais, habilidades_colabora
           )}
 
           <div className={styles.info_grid}>
-            {personagem.afilicao_principal && (
+            {personagem.pontos_vida && (
               <div className={styles.info_box}>
                 <h4>❤️ Pontos de vida</h4>
                 <p>{personagem.pontos_vida}</p>
               </div>
             )}
-            {personagem.afilicao_principal && (
+            {personagem.id_classe && (
               <div className={styles.info_box}>
                 <h4>{classeMapIcon[personagem.id_classe]} Classe</h4>
                 <p>{classeMap[personagem.id_classe] || "Classe indefinida"}</p>
               </div>
             )}
-            {personagem.afilicao_principal && (
+            {personagem.afiliacao_principal && (
               <div className={styles.info_box}>
                 <h4>👥 Afiliação</h4>
-                <p>{personagem.afilicao_principal}</p>
+                <p>{personagem.afiliacao_principal}</p>
               </div>
             )}
             {personagem.dificuldade && (
