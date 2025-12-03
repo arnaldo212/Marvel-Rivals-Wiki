@@ -228,7 +228,6 @@ if(error){
                 </div>
                 <div className={styles.perfil_info}>
                   <h2>{jogador.nome}</h2>
-                  <p className={styles.id_jogador}>ID: #{jogador.id_jogador}</p>
                 </div>
               </div>
 

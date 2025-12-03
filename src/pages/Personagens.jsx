@@ -1,22 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Personagens.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
-/*talvez transformar algumas parte do codigo em componentes, 
-por ex a parte dos cards, mas não sei se precisa
 
-talvez melhorar a parte do detalhe dos personagens???
-*/
-const getFilteredItems = (query, personagens)=> {
-  if(!query){
-    //return [];
-    return personagens;
-  }
-  return personagens.filter(personagem => 
+const getFilteredItems = (query, personagens) => {
+  if (!query) return personagens;
+  return personagens.filter((personagem) =>
     personagem.nome.toLowerCase().includes(query.toLowerCase())
   );
 };
 
-//mapear as imagens dos personagens
+// mapear as imagens dos personagens
 const personagemImagens = {
   "Homem Aranha": "/personagens/homem-aranha.png",
   "Capitão América": "/personagens/capitao.png",
@@ -32,54 +26,49 @@ const personagemImagens = {
   "Tocha Humana": "/personagens/tocha.png",
   "Ultron": "/personagens/ultron.png",
   "Garota Esquilo": "/personagens/esquilo.png",
-}
-
-const getPersonagemImagem = (nome) => {
-  return personagemImagens[nome]
 };
+
+const getPersonagemImagem = (nome) => personagemImagens[nome];
 
 const classeMap = {
   1: "Vanguarda",
   2: "Duelista",
-  3: "Estrategista"
+  3: "Estrategista",
 };
 
 const classeMapIcon = {
   1: "🛡️",
   2: "⚔️",
-  3: "🧠"
-}
+  3: "🧠",
+};
 
-//loading
 const Loading = () => {
-  const [dots, setDots] = React.useState('');
-
-  React.useEffect(() => {
+  const [dots, setDots] = useState("");
+  useEffect(() => {
     const interval = setInterval(() => {
-      setDots(prev => prev.length >= 3 ? '' : prev + '.');
+      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
     }, 500);
     return () => clearInterval(interval);
   }, []);
   return (
     <div className={styles.loading_container}>
       <div className={styles.spinner}></div>
-        <p>Carregando personagens{dots}</p>
-          <small style={{ color: '#aaa', marginTop: '10px'}}>
-            A API pode demorar alguns segundos...
-          </small>
+      <p>Carregando personagens{dots}</p>
+      <small style={{ color: "#aaa", marginTop: "10px" }}>
+        A API pode demorar alguns segundos...
+      </small>
     </div>
   );
 };
 
-// Componente de Card
 const PersonagemCard = ({ personagem, onClick }) => (
-  <div 
+  <div
     className={styles.card}
     onClick={onClick}
     style={{
       backgroundImage: `url(${getPersonagemImagem(personagem.nome)})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundSize: "cover",
+      backgroundPosition: "center",
     }}
   >
     <div className={styles.card_overlay}>
@@ -88,15 +77,13 @@ const PersonagemCard = ({ personagem, onClick }) => (
         <p>{personagem.classe}</p>
         {personagem.dificuldade && (
           <p>{classeMap[personagem.id_classe] || "Classe indefinida"}</p>
-
         )}
       </div>
     </div>
   </div>
 );
 
-// Componente de Modal
-const PersonagemModal = ({ personagem, habilidades, habilidadeColab, onClose }) => {
+const PersonagemModal = ({ personagem, habilidades_normais, habilidades_colaborativas, onClose }) => {
   if (!personagem) return null;
 
   return (
@@ -105,22 +92,19 @@ const PersonagemModal = ({ personagem, habilidades, habilidadeColab, onClose }) 
         <button className={styles.close_button} onClick={onClose}>
           X
         </button>
-        
+
         <div className={styles.modal_header}>
           <h2>{personagem.nome}</h2>
         </div>
 
         <div className={styles.info_section}>
           <div className={styles.modal_image}>
-              <img 
-                src={getPersonagemImagem(personagem.nome)}
-                alt={personagem.nome}
-              />
+            <img src={getPersonagemImagem(personagem.nome)} alt={personagem.nome} />
           </div>
-      </div>
+        </div>
 
         <div className={styles.modal_body}>
-               {personagem.descricao && (
+          {personagem.descricao && (
             <div className={styles.info_section}>
               <h3>📖 Descrição</h3>
               <p>{personagem.descricao}</p>
@@ -128,78 +112,71 @@ const PersonagemModal = ({ personagem, habilidades, habilidadeColab, onClose }) 
           )}
 
           <div className={styles.info_grid}>
-
             {personagem.afilicao_principal && (
               <div className={styles.info_box}>
                 <h4>❤️ Pontos de vida</h4>
                 <p>{personagem.pontos_vida}</p>
               </div>
             )}
-
             {personagem.afilicao_principal && (
               <div className={styles.info_box}>
                 <h4>{classeMapIcon[personagem.id_classe]} Classe</h4>
                 <p>{classeMap[personagem.id_classe] || "Classe indefinida"}</p>
               </div>
             )}
-
-            
             {personagem.afilicao_principal && (
               <div className={styles.info_box}>
                 <h4>👥 Afiliação</h4>
                 <p>{personagem.afilicao_principal}</p>
               </div>
             )}
-
             {personagem.dificuldade && (
               <div className={styles.info_box}>
                 <h4>🎯 Dificuldade</h4>
                 <p>{personagem.dificuldade}</p>
               </div>
             )}
-
           </div>
-          
+
           <div className={styles.habilidade_box}>
-            <h4>🛠️ Habilidades</h4>
-            <div className={styles.habilidades_content}>
-
-              {!habilidades || habilidades.length === 0 ? (
-                   <p>Carregando habilidade...</p>
-              ) : (
-                  habilidades.map((hab, index) => (
-                    <div key={index} className={styles.habilidade_item}>
-                        <h3>{hab.nome}</h3>
-                        <p>{hab.descricao}</p>
-
-                        {hab.tipo && <p>Tipo: {hab.tipo}</p>}
-
-                        {hab.dano && hab.dano.flat && (
-                            <p>Dano: {hab.dano.flat}</p>
-                        )}
-
-                    </div>
-                  ))
-                )}
-                
-            </div>
+          <h4>🛠️ Habilidades</h4>
+          <div className={styles.habilidades_normais_content}>
+            {habilidades_normais && habilidades_normais.length > 0 ? (
+              habilidades_normais.map((hab, index) => (
+                <div key={index} className={styles.habilidade_item}>
+                  <h3>{hab.nome}</h3>
+                  <p>{hab.descricao}</p>
+                  {hab.tipo && <p><strong>Tipo:</strong> {hab.tipo}</p>}
+                  {typeof hab.dano === "number" && <p><strong>Dano:</strong> {hab.dano}</p>}
+                  {"cura" in hab && <p><strong>Cura:</strong> {hab.cura}</p>}
+                  {"escudo" in hab && <p><strong>Escudo:</strong> {hab.escudo}</p>}
+                  {hab.tempo_recarga && <p><strong>Recarga:</strong> {hab.tempo_recarga}</p>}
+                  {typeof hab.alcance === "number" && <p><strong>Alcance:</strong> {hab.alcance}</p>}
+                </div>
+              ))
+            ) : (
+              <p>Sem habilidades registradas.</p>
+            )}
           </div>
+        </div>
+
 
           <div className={styles.habilidade_box}>
             <h4>🤜🤛 Habilidades Colaborativas</h4>
-
             <div className={styles.habilidades_content}>
-              {!habilidadeColab || habilidadeColab.length === 0 ? (
-                <p>Este personagem não possui habilidades colaborativas.</p>
+              {habilidades_colaborativas && habilidades_colaborativas.length > 0 ? (
+                habilidades_colaborativas.map((hab, index) => (
+                  <div key={index} className={styles.habilidade_item}>
+                    <h3>{hab.nome}</h3>
+                    <p>{hab.descricao}</p>
+                    {hab.tipo && <p>Tipo: {hab.tipo}</p>}
+                    {hab.efeito_especial && <p>Efeito: {hab.efeito_especial}</p>}
+                    {hab.duracao && <p>Duração: {hab.duracao} segundos</p>}
+                    {hab.bonus_habilidade && <p>Bônus: {hab.bonus_habilidade}</p>}
+                  </div>
+                ))
               ) : (
-                <div className={styles.habilidade_item}>
-                    <h3>{habilidadeColab[0]?.nome}</h3>
-                    <p>{habilidadeColab[0]?.descricao}</p>
-                    <p>Tipo: {habilidadeColab[0]?.tipo}</p>
-                    <p>Efeito: {habilidadeColab[0]?.efeito_especial}</p>
-                    <p>Duração: {habilidadeColab[0]?.duracao} segundos</p>
-                    <p>Bônus: {habilidadeColab[0]?.bonus_habilidade}</p>
-                </div>
+                <p>Este personagem não possui habilidades colaborativas.</p>
               )}
             </div>
           </div>
@@ -209,177 +186,112 @@ const PersonagemModal = ({ personagem, habilidades, habilidadeColab, onClose }) 
   );
 };
 
-// Componente de Busca
-const SearchBar = ({ query, onChange, resultCount }) => (
-  <div className={styles.search_section}>
-    <label htmlFor="search" className="form-label text-white">
-      Pesquisar Personagem
-    </label>
-    <input 
-      id="search"
-      type="text" 
-      value={query} 
-      onChange={onChange}
-      placeholder="Digite o nome do personagem..." 
-      className="form-control mb-3"
-      aria-label="Campo de busca de personagens"
-    />
-    {query && (
-      <p className={styles.result_count}>
-        {resultCount} {resultCount === 1 ? 'resultado encontrado' : 'resultados encontrados'}
-      </p>
-    )}
-  </div>
-);
-
-
 export default function Personagens() {
   const [personagens, setPersonagens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [selectedPersonagem, setSelectedPersonagem] = useState(null);
-  const [error, setError] = useState(null);
   const [habilidades, setHabilidades] = useState([]);
-  const [habilidadeColab, setHabilidadeColab] = useState([]);
+  const [habilidadesColab, setHabilidadesColab] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchPersonagens = async () => {
-    try {
-      //timeout de 15 seg
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-      const response = await fetch(
-        "https://marvel-rivals-api-mongo.onrender.com/personagens", //URL DA API MONGO
-        { signal: controller.signal }
-      );
-
-      clearTimeout(timeoutId);
-
-      if(!response.ok){
-        throw new Error("Erro ao carregar");
-      }
-
-      const data = await response.json();
-      setPersonagens(data);
-      setLoading(false);
-    }catch(err){
-      if (err.name === 'AbortError'){
-        setError("API demorou muito");
-      }else{
-        setError(err.message);
-      }
-      setLoading(false);
+  useEffect(() => {
+  if (location.state?.selectedPersonagem) {
+      const personagem = location.state.selectedPersonagem;
+      handleCardClick(personagem);
+      navigate('/personagens', { replace: true, state: {} });
     }
-  };
-  fetchPersonagens();
-}, []);
+  }, [location, navigate]);
 
-const handleSearchChange = (e) => {
+
+  useEffect(() => {
+    const fetchPersonagens = async () => {
+      try {
+        const response = await fetch(
+          "https://marvel-rivals-api-mongo.onrender.com/personagens"
+        );
+        if (!response.ok) throw new Error("Erro ao carregar personagens");
+        const data = await response.json();
+        setPersonagens(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPersonagens();
+  }, []);
+
+  const handleSearchChange = (e) => {
     setQuery(e.target.value);
     setSelectedPersonagem(null);
   };
 
-  const handleCardClick = (personagem) => {
+  const handleCardClick = async (personagem) => {
     setSelectedPersonagem(personagem);
-    buscarHabilidades(personagem.nome); 
-  };
 
-  const handleCloseModal = () => {
-    setSelectedPersonagem(null);
-  };
-  if (loading) return <Loading />
-
-  if (error) {
-    return (
-      <div className={styles.loading_container}>
-        <div style={{ textAlign: 'center', color: 'white' }}>
-          <h2 style={{ color: '#e23636', marginBottom: '20px' }}>😕 Ops!</h2>
-          <p style={{ marginBottom: '20px' }}>Erro ao carregar personagens: {error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            style={{
-              background: '#e23636',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              fontSize: '16px',
-              cursor: 'pointer',
-              transition: 'all 0.3s'
-            }}
-            onMouseOver={(e) => e.target.style.background = '#ff4444'}
-            onMouseOut={(e) => e.target.style.background = '#e23636'}
-          >
-            🔄 Tentar novamente
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const buscarHabilidades = async (nomePersonagem) => {
     try {
       const response = await fetch(
-        `https://marvel-rivals-api-mongo.onrender.com/personagens${nomePersonagem.toLowerCase()}`
+        `https://marvel-rivals-api-mongo.onrender.com/personagens/${personagem._id}/habilidades`
       );
-
-      if (!response.ok) {
-        throw new Error("Erro ao carregar habilidades");
-      }
-
+      if (!response.ok) throw new Error("Erro ao carregar habilidades");
       const data = await response.json();
-
-      // Aqui pegue apenas as habilidades do retorno
-      setHabilidades(data.habilidades || []);
-      setHabilidadeColab(data.Habilidades_Colaborativas || []);
+      setHabilidades(data.habilidades_normais || []);
+      setHabilidadesColab(data.habilidades_colaboracao || []);
     } catch (err) {
-      console.error("Erro ao buscar habilidades:", err);
+      console.error(err);
       setHabilidades([]);
+      setHabilidadesColab([]);
     }
   };
+
+  if (loading) return <Loading />;
 
   const filteredItems = getFilteredItems(query, personagens);
 
   return (
-
     <div className={styles.page_container}>
       <div className={styles.page_content}>
-
-        {/*header */}
         <div className={styles.header}>
           <h1>Personagens Marvel Rivals</h1>
           <p>Veja a lista completa de heróis e vilões jogáveis em Marvel Rivals.</p>
         </div>
 
-        {/*barra de pesquisa */}
-        <SearchBar
-          query={query}
-          onChange={handleSearchChange}
-          resultCount={filteredItems.length}
-        />
+        <div className={styles.search_section}>
+          <label htmlFor="search" className="form-label text-white">
+            Pesquisar Personagem
+          </label>
+          <input
+            id="search"
+            type="text"
+            value={query}
+            onChange={handleSearchChange}
+            placeholder="Digite o nome do personagem..."
+            className="form-control mb-3"
+            aria-label="Campo de busca de personagens"
+          />
+        </div>
 
-        {/*detalhes do personagem */}
-       <PersonagemModal
-        personagem={selectedPersonagem}
-        habilidades={habilidades}
-        habilidadeColab={habilidadeColab}
-        onClose={handleCloseModal}
-      />
-        
-      
-    {/*cards dos personagens */}
+        {selectedPersonagem && (
+          <PersonagemModal
+            personagem={selectedPersonagem}
+            habilidades_normais={habilidades}
+            habilidades_colaborativas={habilidadesColab}
+            onClose={() => setSelectedPersonagem(null)}
+          />
+        )}
+
         <section className={styles.cards_section}>
           <h2>Todos os personagens</h2>
-
           {filteredItems.length > 0 ? (
             <div className={styles.cards_container}>
               {filteredItems.map((personagem) => (
                 <PersonagemCard
-                  key={personagem.id}
+                  key={personagem._id}
                   personagem={personagem}
                   onClick={() => handleCardClick(personagem)}
-                  />
+                />
               ))}
             </div>
           ) : (
@@ -391,8 +303,4 @@ const handleSearchChange = (e) => {
       </div>
     </div>
   );
-
-
 }
-
-

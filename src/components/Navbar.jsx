@@ -31,13 +31,13 @@ export default function Navbar() {
       setLoading(true);
       try{
         //busca personagens
-        const personagensRes = await fetch("https://api-marvel-rivals.onrender.com/personagens/");
+        const personagensRes = await fetch("https://marvel-rivals-api-mongo.onrender.com/personagens");
         const personagensDados = await personagensRes.json();
         const personagensFiltrados = personagensDados.filter(p =>
           p.nome.toLowerCase().includes(searchQuery.toLowerCase())
         );
         // busca de jogadores 
-        const jogadoresRes = await fetch("https://api-marvel-rivals.onrender.com/jogadores/");
+        const jogadoresRes = await fetch("https://marvel-rivals-api-mongo.onrender.com/jogadores/");
         const jogadoresDados = await jogadoresRes.json();
         const jogadoresFiltrados = jogadoresDados.filter(j =>
           j.nome.toLowerCase().includes(searchQuery.toLowerCase())
